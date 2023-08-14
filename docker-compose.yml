@@ -25,7 +25,7 @@ services:
       - "3306:3306"
     volumes:
       - ./data/mysql/db:/var/lib/mysql
-      # - ./app/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./app/scripts/db_app.sql:/docker-entrypoint-initdb.d
 
   db_test:
     image: mysql:latest
