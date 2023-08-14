@@ -35,3 +35,9 @@ El tercer endpoint **GET /api/v1/database/:id** es para obtener la clasificacion
 - **MySql**: Motor de base de datos relacional para dar persistencia de datos a los datos de la app.
 
 - **Docker y docker compose**: Para crear la imagen de la Api desarrollada. Y docker compose para levantar y conectar los contedores de la aplicacion, la base de datos de la aplicacion y la base de datos de prueba, para que probar el funcionamiento del proyecto solicitado.
+
+- **Swagger**: es una herramienta de especificaciones que utilice para definir la APIs de manera estandarizada y comprensible. Proporciona una forma de describir la estructura de una API, los endpoints, los parámetros de entrada, los tipos de respuesta, los métodos HTTP admitidos y otra información relevante en un formato legible.
+
+### Recomendacion
+
+Dentro de la **/api/docs/** podra ver la documentacion de todos los endpoint de la API.
