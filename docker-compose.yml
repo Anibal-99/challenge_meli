@@ -1,0 +1,45 @@
+services:
+
+  app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py test &&
+             python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db_api
+
+  db_api:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'meli_database'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql/db:/var/lib/mysql
+      - ./app/scripts/db_app.sql:/docker-entrypoint-initdb.d/db_app.sql
+
+  db_test:
+    image: mysql:latest
+    container_name: db_test_meli
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_challenge_test
+      MYSQL_DATABASE: db_challenge_test
+      MYSQL_USER: meli_user_testx
+      MYSQL_PASSWORD: mysql_pass_test
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data_test:/var/lib/mysql
+      - ./app/scripts/db_prueba.sql:/docker-entrypoint-initdb.d/db_prueba.sql
+
+volumes:
+  db_data_test:
