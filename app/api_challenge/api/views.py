@@ -104,7 +104,6 @@ class DatabaseScanView(generics.CreateAPIView):
 
                 for info_type in InformationType.objects.all():
                     if re.match(info_type.regex, column_name):
-                        print("entro a la regex")
                         column_instance.information_type = info_type
                         column_instance.save()
                         break
