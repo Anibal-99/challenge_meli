@@ -16,7 +16,7 @@ La API cuenta con los siguientes endpoints:
 | /api/v1/database | /api/v1/database/scan/:id |
 | /api/v1/database/scan/:id |
 
-El primer enpoint **POST /api/v1/database/**, consiste en permitir la persistencia de datos de conexiones a otras bases de datos, que posteriormente podran ser escaneadas.
+El primer enpoint **POST /api/v1/database/**, consiste en permitir la persistencia de datos de conexiones a otras bases de datos, que posteriormente podrán ser escaneadas.
 
 El segundo endpoint **POST /api/v1/database/scan/:id** es para ejecutar la clasificacion de la de una base de datos, dicho **id** que se la pasa por paramentro corresponde a una conexion de una base de datos.
 
@@ -38,11 +38,11 @@ El tercer endpoint **GET /api/v1/database/scan/:id** es para obtener la clasific
 
 - **Swagger**: es una herramienta de especificaciones que utilice para definir la APIs de manera estandarizada y comprensible. Proporciona una forma de describir la estructura de una API, los endpoints, los parámetros de entrada, los tipos de respuesta, los métodos HTTP admitidos y otra información relevante en un formato legible.
 
-### Recomendacion
+## Recomendacion
 
-Dentro de la **/api/docs/** podra ver la documentacion de todos los endpoint de la API.
+Dentro de la url **/api/docs/** podrán encontrar toda la documentacion de todos los endpoint de la API.
 
-### Entregables
+## Entregables
 - [Dockerfile correspondiente para ejecutar la aplicación](Dockerfile)
 - [Script SQL para crear la base de datos de la aplicación](./app/scripts/db_app.sql)
 - [Script SQL para crear una base de datos de ejemplo a escanear](./app/scripts/db_prueba.sql)
