@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from api_challenge.models import Database, InformationType, ColumnDatabase
+from api_challenge.models import (
+    Database,
+    InformationType,
+    ColumnDatabase,
+    ScanHistory,
+    TableDatabase,
+    Classification,
+)
 from django.contrib.auth.hashers import make_password
 
 
@@ -19,9 +26,9 @@ class SerializerDatabaseConnection(serializers.ModelSerializer):
         )
         return database
 
-    def to_representation(self, instance):
-        """Acomoda como queremos que se muestre el response"""
-        return {"id": instance.id}
+    # def to_representation(self, instance):
+    #     """Acomoda como queremos que se muestre el response"""
+    #     return {"id": instance.id}
 
 
 class SerializerInformationType(serializers.ModelSerializer):
@@ -40,6 +47,35 @@ class SerializerColumnDatabase(serializers.ModelSerializer):
         fields = ["id", "table", "information_type"]
         read_only_fields = ["id"]
 
-    # def to_representation(self, instance):
-    #     """Acomoda como queremos que se muestre el response"""
-    #     return {"id": instance.id, "table": instance.table.name, 'in'}
+
+class ColumnSerializer(serializers.ModelSerializer):
+    information_type = serializers.StringRelatedField()
+
+    class Meta:
+        model = ColumnDatabase
+        fields = ["name", "information_type"]
+
+
+class TableSerializer(serializers.ModelSerializer):
+    column_database = ColumnSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = TableDatabase
+        fields = ["name", "column_database"]
+
+
+class ClassificationSerializer(serializers.ModelSerializer):
+    table_database = TableSerializer(many=True)
+
+    class Meta:
+        model = Classification
+        fields = ["table_database"]
+
+
+class ScanHistorySerializer(serializers.ModelSerializer):
+    database = serializers.StringRelatedField()
+    classification = ClassificationSerializer()
+
+    class Meta:
+        model = ScanHistory
+        fields = ["id", "date", "database", "classification"]

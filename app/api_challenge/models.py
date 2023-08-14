@@ -45,7 +45,7 @@ class Classification(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     scan_history = models.OneToOneField(
         ScanHistory,
-        on_delete=models.SET_DEFAULT,
+        on_delete=models.CASCADE,
         default="",
         related_name="classification",
     )
@@ -62,7 +62,7 @@ class TableDatabase(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
     clasification = models.ForeignKey(
         Classification,
-        on_delete=models.SET_DEFAULT,
+        on_delete=models.CASCADE,
         default="",
         related_name="table_database",
     )

@@ -37,21 +37,24 @@ class ColumnViewSet(viewsets.ModelViewSet):
     queryset = serializers.SerializerColumnDatabase.Meta.model.objects.all()
 
 
+class ScanHistoryViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.ScanHistorySerializer
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = serializers.ScanHistorySerializer.Meta.model.objects.all()
+
+
 class DatabaseScanView(generics.CreateAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        print("entro perrro")
         database_id = self.kwargs.get("id")
 
         try:
             database = Database.objects.get(id=database_id)
         except Database.DoesNotExist:
             return Response({"detail": "Database not found"}, status=404)
-
-        print(request.user)
-        print(f"{database.name} - {database.host}")
 
         con, cursor = get_cursor(
             database.name,
@@ -61,7 +64,7 @@ class DatabaseScanView(generics.CreateAPIView):
             database.password,
         )
 
-        # Obtener la lista de tablas en la base de datos
+        # Obtiene la lista de tablas en la base de datos
         cursor.execute("SHOW TABLES;")
         tables = cursor.fetchall()
         user = User.objects.get(email=request.user.email)
@@ -72,8 +75,7 @@ class DatabaseScanView(generics.CreateAPIView):
         )
         clasification.save()
 
-        # Diccionario para almacenar las tablas y sus columnas
-
+        # itera por cada tabla existente en la base de datos a la que nos conectamos
         for table in tables:
             table_name = table[0]
 
@@ -115,3 +117,9 @@ class DatabaseScanView(generics.CreateAPIView):
             },
             status=201,
         )
+
+
+class ScanView(generics.RetrieveAPIView):
+    queryset = Database.objects.all()
+    serializer_class = serializers.ScanHistorySerializer
+    lookup_url_kwarg = "id"
