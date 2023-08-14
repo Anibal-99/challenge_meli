@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 
 COPY ./requirements.txt /requirements.txt
-# WORKDIR /app
+WORKDIR /app
 COPY ./app /app
 
 RUN pip install --upgrade pip && \

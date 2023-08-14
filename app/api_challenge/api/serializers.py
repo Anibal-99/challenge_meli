@@ -7,6 +7,7 @@ from api_challenge.models import (
     TableDatabase,
     Classification,
 )
+
 from django.contrib.auth.hashers import make_password
 
 
@@ -26,9 +27,9 @@ class SerializerDatabaseConnection(serializers.ModelSerializer):
         )
         return database
 
-    # def to_representation(self, instance):
-    #     """Acomoda como queremos que se muestre el response"""
-    #     return {"id": instance.id}
+    def to_representation(self, instance):
+        """Acomoda como queremos que se muestre el response"""
+        return {"id": instance.id}
 
 
 class SerializerInformationType(serializers.ModelSerializer):

@@ -37,7 +37,7 @@ class ColumnViewSet(viewsets.ModelViewSet):
     queryset = serializers.SerializerColumnDatabase.Meta.model.objects.all()
 
 
-class ScanHistoryViewSet(viewsets.ModelViewSet):
+class ScanHistoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ScanHistorySerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -112,8 +112,8 @@ class DatabaseScanView(generics.CreateAPIView):
         close_cursor(con, cursor)
         return Response(
             {
+                "Scan history": scan_history.id,
                 "detail": "Scan started successfully",
-                "database_structure": "",
             },
             status=201,
         )

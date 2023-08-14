@@ -6,7 +6,7 @@ router = DefaultRouter()
 router.register("database", views.DatabaseViewSet)
 router.register("information_type", views.InformationTypeViewSet)
 router.register("columns", views.ColumnViewSet)
-router.register("v1/database/scan", views.ScanHistoryViewSet)
+router.register("v1/database/scan_history", views.ScanHistoryViewSet)
 
 app_name = "api_challenge"
 
