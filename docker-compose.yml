@@ -19,13 +19,13 @@ services:
   db_api:
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: 'meli_database'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_DATABASE: meli_database
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
       - "3306:3306"
     volumes:
       - ./data/mysql/db:/var/lib/mysql
-      - ./app/scripts/db_app.sql:/docker-entrypoint-initdb.d/db_app.sql
+      - ./app/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   db_test:
     image: mysql:latest
